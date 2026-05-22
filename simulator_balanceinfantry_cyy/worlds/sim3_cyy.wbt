@@ -1,0 +1,473 @@
+#VRML_SIM R2023b utf8
+
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/objects/backgrounds/protos/TexturedBackground.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/objects/backgrounds/protos/TexturedBackgroundLight.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/objects/floors/protos/RectangleArena.proto"
+
+WorldInfo {
+}
+Viewpoint {
+  orientation -0.12107684012634179 -0.07914301849349771 0.9894830879852158 4.601315036737516
+  position 1.2451135947294225 8.210287126758129 1.4447656783515466
+  follow "rectangle arena"
+}
+TexturedBackground {
+}
+TexturedBackgroundLight {
+}
+RectangleArena {
+  translation 0 0 0.03
+  rotation 0 1 0 0
+  floorSize 20 20
+}
+DEF robot Robot {
+  translation 0.8100977610655439 1.9656450086938952 0.38457696741759556
+  rotation -0.003336075766087238 -0.005608841327096518 0.9999787055219979 0.9897810031241312
+  children [
+    Camera {
+      translation 0.15 0 0.05
+      children [
+        Pose {
+          children [
+            Shape {
+              appearance PBRAppearance {
+              }
+              geometry Box {
+                size 0.05 0.1 0.05
+              }
+            }
+          ]
+        }
+      ]
+      name "cam1"
+      rotationStep 0.261799
+      width 1920
+      height 1080
+      far 1000
+    }
+    Display {
+      width 256
+      height 128
+    }
+    Gyro {
+      translation 0 0 0.08
+      rotation 0 0 1 -5.307179586466759e-06
+      children [
+        Shape {
+          appearance PBRAppearance {
+          }
+          geometry Cylinder {
+            height 0.01
+            radius 0.015
+          }
+        }
+      ]
+    }
+    InertialUnit {
+      translation 0 0 0.08
+      rotation 0 0 1 -5.307179586466759e-06
+      children [
+        Shape {
+          appearance PBRAppearance {
+          }
+          geometry Cylinder {
+            height 0.01
+            radius 0.015
+          }
+        }
+      ]
+      name "imu"
+    }
+    DEF left_front HingeJoint {
+      jointParameters HingeJointParameters {
+        position -1.1243424476023138
+        axis 0 1 0
+        anchor 0.054 0.15 0
+      }
+      device [
+        PositionSensor {
+          name "position_sensor1"
+        }
+        DEF motor_1 RotationalMotor {
+          name "motor_1"
+          maxTorque 40
+        }
+      ]
+      endPoint Solid {
+        translation 0.12164879084309263 0.20000000000000034 -0.03238272838205239
+        rotation 0 -1 0 1.1243424476023138
+        children [
+          HingeJoint {
+            jointParameters HingeJointParameters {
+              position 1.7045981212493775
+              axis 0 1 0
+              anchor 0 0 -0.075
+            }
+            device [
+              DEF ps_1 PositionSensor {
+                name "ps_1"
+              }
+            ]
+            endPoint Solid {
+              translation -0.14010209496980913 0 -0.028897906934083208
+              rotation 0 1 0 1.9222981212492083
+              children [
+                DEF left_front_down HingeJoint {
+                  jointParameters HingeJointParameters {
+                    position 609.5862294516699
+                    axis 0 1 0
+                    anchor 0 0 -0.125
+                  }
+                  device [
+                    RotationalMotor {
+                      name "wheel_motor"
+                      maxTorque 200
+                    }
+                  ]
+                  endPoint DEF left_front_down Solid {
+                    translation 0 0.0349999999999957 -0.125
+                    rotation -0.6917317237566911 -0.5100407618085507 0.5112393212990858 4.350377245686492
+                    children [
+                      DEF wheel Shape {
+                        geometry Cylinder {
+                          height 0.05
+                          radius 0.1
+                        }
+                      }
+                      Gyro {
+                        name "wheel_gyro"
+                      }
+                    ]
+                    name "left_front_down"
+                    boundingObject USE wheel
+                    physics Physics {
+                      density -1
+                      mass 0.786
+                    }
+                    linearVelocity 0.00010020165113450733 0.00014662632326627393 -7.694031630558559e-08
+                    angularVelocity -0.001474756603970857 0.0010193723140147347 -0.0008017215173912032
+                  }
+                }
+                Shape {
+                  appearance PBRAppearance {
+                  }
+                  geometry DEF left_front_down Box {
+                    size 0.02 0.02 0.29
+                  }
+                }
+              ]
+              boundingObject USE left_front_down
+              physics Physics {
+                density -1
+                mass 0.21
+              }
+              linearVelocity 0.00015301804653382708 9.143969708269479e-05 -1.1935576358249972e-05
+              angularVelocity -7.412578195008755e-05 9.965230560111601e-05 -0.0007928181670927258
+            }
+          }
+          DEF left_leg_up Shape {
+            appearance PBRAppearance {
+              roughness 1
+            }
+            geometry Box {
+              size 0.02 0.02 0.2
+            }
+          }
+        ]
+        boundingObject USE left_leg_up
+        physics Physics {
+          density -1
+          mass 0.15
+        }
+        linearVelocity 0.00019047302647929126 8.868657962845343e-05 -1.2774021780472823e-05
+        angularVelocity -0.00011206655277074332 0.00012456358817646354 -0.0007930570738841096
+      }
+    }
+    DEF right_front HingeJoint {
+      jointParameters HingeJointParameters {
+        position -1.1243498389449216
+        axis 0 1 0
+        anchor 0.054 -0.15 0
+      }
+      device [
+        PositionSensor {
+          name "position_sensor3"
+        }
+        DEF motor_3 RotationalMotor {
+          name "motor_3"
+          maxTorque 40
+        }
+      ]
+      endPoint Solid {
+        translation 0.12164903019309659 -0.20000000000000173 -0.03238222836578355
+        rotation 0 -1 0 1.1243498389449218
+        children [
+          HingeJoint {
+            jointParameters HingeJointParameters {
+              position 1.6916663094977975
+              axis 0 1 0
+              anchor 0 0 -0.075
+            }
+            device [
+              DEF ps_3 PositionSensor {
+                name "ps_3"
+              }
+            ]
+            endPoint Solid {
+              translation -0.1406865473456965 0 -0.030713485168206274
+              rotation 0 1 0 1.9093663094976487
+              children [
+                DEF left_front_down HingeJoint {
+                  jointParameters HingeJointParameters {
+                    position 587.2270116949207
+                    axis 0 1 0
+                    anchor 0 0 -0.125
+                  }
+                  device [
+                    RotationalMotor {
+                      name "wheel_motor1"
+                      maxTorque 200
+                    }
+                  ]
+                  endPoint DEF left_front_down Solid {
+                    translation 0 -0.03499999999999713 -0.125
+                    rotation -0.08879219873520136 -0.7043125375848526 0.7043151246740015 3.318711904146786
+                    children [
+                      DEF wheel Shape {
+                        geometry Cylinder {
+                          height 0.05
+                          radius 0.1
+                        }
+                      }
+                      Gyro {
+                        name "wheel_gyro1"
+                      }
+                    ]
+                    name "right_front_down"
+                    boundingObject USE wheel
+                    physics Physics {
+                      density -1
+                      mass 0.786
+                    }
+                    linearVelocity -0.00010665929438833087 -0.00017194164387590274 1.0672286264447814e-06
+                    angularVelocity 0.0017356603584377853 -0.0010887300360303807 -0.0007812887432107081
+                  }
+                }
+                Shape {
+                  appearance PBRAppearance {
+                  }
+                  geometry DEF left_front_down Box {
+                    size 0.02 0.02 0.29
+                  }
+                }
+              ]
+              boundingObject USE left_front_down
+              physics Physics {
+                density -1
+                mass 0.21
+              }
+              linearVelocity -2.109243858290895e-05 -0.0001756880935989189 -1.3043592731099537e-05
+              angularVelocity -0.00012488728645017842 0.00013297254714673273 -0.0007931406157570577
+            }
+          }
+          DEF left_leg_up Shape {
+            appearance PBRAppearance {
+              roughness 1
+            }
+            geometry Box {
+              size 0.02 0.02 0.2
+            }
+          }
+        ]
+        name "solid(1)"
+        boundingObject USE left_leg_up
+        physics Physics {
+          density -1
+          mass 0.15
+        }
+        linearVelocity 1.7913158129279815e-05 -0.00017425088961924002 -2.4815494488024118e-05
+        angularVelocity -5.0591876741266396e-05 8.419203590193276e-05 -0.0007926665164241335
+      }
+    }
+    DEF left_back HingeJoint {
+      jointParameters HingeJointParameters {
+        position 1.124349994659142
+        axis 0 1 0
+        anchor -0.054 0.15 0
+      }
+      device [
+        PositionSensor {
+          name "position_sensor2"
+        }
+        DEF motor_1 RotationalMotor {
+          name "motor_2"
+          maxTorque 40
+        }
+      ]
+      endPoint Solid {
+        translation -0.12164903523546594 0.20000000000000018 -0.032382217831865484
+        rotation 0 1 0 1.1243499946591418
+        children [
+          HingeJoint {
+            jointParameters HingeJointParameters {
+              position -1.6723674621579192
+              axis 0 1 0
+              anchor 0 0 -0.075
+            }
+            device [
+              DEF ps_1 PositionSensor {
+                name "ps_2"
+              }
+            ]
+            endPoint Solid {
+              translation 0.14151497475888689 0 -0.033436651735083006
+              rotation 0 -1 0 1.890067462157758
+              children [
+                HingeJoint {
+                  jointParameters HingeJointParameters {
+                    position 610.7145111502542
+                    axis 0 1 0
+                    anchor 0 0 -0.125
+                  }
+                  endPoint SolidReference {
+                    solidName "left_front_down"
+                  }
+                }
+                Shape {
+                  appearance PBRAppearance {
+                  }
+                  geometry DEF left_front_down Box {
+                    size 0.02 0.02 0.29
+                  }
+                }
+              ]
+              boundingObject USE left_front_down
+              physics Physics {
+                density -1
+                mass 0.21
+              }
+              linearVelocity 3.153777415745719e-05 0.00016402606308496445 1.6675008592076644e-05
+              angularVelocity -0.00011717253365408492 0.00012791902853650367 -0.0007930906826797007
+            }
+          }
+          DEF left_leg_up Shape {
+            appearance PBRAppearance {
+              roughness 1
+            }
+            geometry Box {
+              size 0.02 0.02 0.2
+            }
+          }
+        ]
+        name "solid(2)"
+        boundingObject USE left_leg_up
+        physics Physics {
+          density -1
+          mass 0.15
+        }
+        linearVelocity 2.9097879897032425e-05 0.00019459116689934795 2.2550622637093437e-05
+        angularVelocity -0.00010992005752240644 0.00012315544433678764 -0.0007930431442474857
+      }
+    }
+    DEF right_back HingeJoint {
+      jointParameters HingeJointParameters {
+        position 1.1243496243390865
+        axis 0 1 0
+        anchor -0.054 -0.15 0
+      }
+      device [
+        PositionSensor {
+          name "position_sensor4"
+        }
+        DEF motor_4 RotationalMotor {
+          name "motor_4"
+          maxTorque 40
+        }
+      ]
+      endPoint Solid {
+        translation -0.12164902324368229 -0.2000000000000003 -0.032382242883659734
+        rotation 0 1 0 1.1243496243390867
+        children [
+          HingeJoint {
+            jointParameters HingeJointParameters {
+              position -1.675720389838887
+              axis 0 1 0
+              anchor 0 0 -0.075
+            }
+            device [
+              DEF ps_4 PositionSensor {
+                name "ps_4"
+              }
+            ]
+            endPoint Solid {
+              translation 0.1413748206553893 0 -0.03296239677792548
+              rotation 0 -0.9999999999999999 0 1.8934203898387014
+              children [
+                HingeJoint {
+                  jointParameters HingeJointParameters {
+                    position 588.3460414435912
+                    axis 0 1 0
+                    anchor 0 0 -0.125
+                  }
+                  endPoint SolidReference {
+                    solidName "right_front_down"
+                  }
+                }
+                Shape {
+                  appearance PBRAppearance {
+                  }
+                  geometry DEF left_front_down Box {
+                    size 0.02 0.02 0.29
+                  }
+                }
+              ]
+              boundingObject USE left_front_down
+              physics Physics {
+                density -1
+                mass 0.21
+              }
+              linearVelocity -0.00013925757002436427 -9.680758020446472e-05 5.055065714186315e-06
+              angularVelocity -7.644684950223503e-05 0.00010116617736240577 -0.0007928333947581911
+            }
+          }
+          DEF right_leg_up Shape {
+            appearance PBRAppearance {
+              roughness 1
+            }
+            geometry Box {
+              size 0.02 0.02 0.2
+            }
+          }
+        ]
+        name "solid(3)"
+        boundingObject USE right_leg_up
+        physics Physics {
+          density -1
+          mass 0.15
+        }
+        linearVelocity -0.00014481602795247758 -7.045496002092478e-05 5.82984251929967e-06
+        angularVelocity -0.00011446940688577233 0.0001261363484998286 -0.0007930719067445677
+      }
+    }
+    DEF body Shape {
+      appearance PBRAppearance {
+        metalness 0
+      }
+      geometry Box {
+        size 0.258 0.332 0.156
+      }
+    }
+  ]
+  boundingObject USE body
+  physics Physics {
+    density -1
+    mass 9.8
+  }
+  controller "naiive_controller"
+  controllerArgs [
+    ""
+  ]
+  remoteControl ""
+  linearVelocity 2.6885908040232874e-05 1.2936610286469287e-05 -3.5246656229715806e-06
+  angularVelocity -8.136384728811035e-05 0.00010440209556174593 -0.0007928601040737712
+}
